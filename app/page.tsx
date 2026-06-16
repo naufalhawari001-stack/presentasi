@@ -1,11 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Globe, Wand2, ShieldCheck, Rocket, Terminal, Radio } from 'lucide-react';
 
+interface MenuProps {
+  name: string;
+  desc: string;
+  icon: React.ReactNode;
+  path: string;
+  color: string;
+}
+
 export default function Home() {
-  const menus = [
+  const menus: MenuProps[] = [
     { 
       name: '01. DIGITAL SHIFT', 
       desc: 'Urgensi & kewajiban jihad digital bagi calon alumni di platform media sosial.',
@@ -36,7 +44,8 @@ export default function Home() {
     },
   ];
 
-  const containerVariants = {
+  // KUNCI PERBAIKAN TYPESCRIPT: Memberikan anotasi tipe ekplisit 'Variants'
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -44,18 +53,21 @@ export default function Home() {
     },
   };
 
-  const itemVariants = {
+  // KUNCI PERBAIKAN TYPESCRIPT: Menambahkan 'as const' untuk mengunci type literal transition
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: { 
       opacity: 1, 
       y: 0, 
-      transition: { type: 'spring', stiffness: 100, damping: 16 } 
+      transition: { 
+        type: 'spring' as const, 
+        stiffness: 100, 
+        damping: 16 
+      } 
     },
   };
 
   return (
-    /* PERBAIKAN MUTLAK: Menghilangkan overflow-y-auto yang longgar dan menggantinya dengan max-h-screen serta overflow-hidden 
-       agar layout tidak melar ke bawah dan memicu kemunculan garis sisa di bawah teks sistem status */
     <main className="relative flex min-h-screen max-h-screen h-screen w-full flex-col items-center justify-center p-6 md:p-12 overflow-hidden bg-[#050811] box-border">
       
       {/* BACKGROUND CONFIG */}
@@ -138,7 +150,7 @@ export default function Home() {
 
       </div>
 
-      {/* BOTTOM FOOTER STATUS BAR (MEMASANG JARAK BAGIAN BAWAH YANG PRESISI TANPA LEKUKAN BOCOR) */}
+      {/* BOTTOM FOOTER STATUS BAR */}
       <div className="absolute bottom-6 w-full text-center z-10 font-mono text-[9px] text-slate-600 tracking-widest uppercase select-none pointer-events-none">
         SYSTEM STATUS: <span className="text-emerald-500 font-bold">ONLINE</span> // TA 2025/2026 // © KMI NURUL HUDA PURBALINGGA
       </div>
