@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
+/* 1. Konfigurasi Variabel Warna Futuristik (Tailwind v4 Standar) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #070a13; /* Deep space dark background */
+  --foreground: #f1f5f9; /* Slate 100 untuk teks utama */
+  
+  /* Custom Neon Glow Colors */
+  --neon-cyan: #06b6d4;
+  --neon-emerald: #10b881;
+  --neon-purple: #a855f7;
+  --neon-rose: #f43f5e;
 }
 
-@theme inline {
+/* 2. Extend Tema Baru ke dalam Sistem Tailwind v4 */
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  /* Animasi Grid & Efek Khusus */
+  --animate-pulse-slow: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 3. PERBAIKAN: Mengunci element dasar agar layout Next.js tidak runtuh/gepeng */
+html, body {
+  min-height: 100%;
+  width: 100%;
+  background-color: #070a13;
+  color: #f1f5f9;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 4. Efek Estetika Latar Belakang (Cyber-Grid Tech) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Efek Ambient Glow Halus di Sudut Layar */
+body::after {
+  content: "";
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vh;
+  z-index: -2;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 80%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* 5. Custom Scrollbar Futuristik Minimalis */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070a13;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* 6. Utility Class Tambahan untuk Efek Glitch / Neon Text */
+@utility text-glow-cyan {
+  text-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
 }
