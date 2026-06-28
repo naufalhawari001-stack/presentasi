@@ -1,160 +1,89 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, Variants } from 'framer-motion';
-import { Globe, Wand2, ShieldCheck, Rocket, Terminal, Radio } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Video, HelpCircle, ShieldAlert, UserCheck, BookOpen, Milestone, Compass, GraduationCap } from 'lucide-react';
 
-interface MenuProps {
-  name: string;
-  desc: string;
-  icon: React.ReactNode;
-  path: string;
-  color: string;
-}
+const slides = [
+  "image/aya1.jpg",
+  "image/aya2.jpg",
+  "image/aya3.jpg"
+];
 
 export default function Home() {
-  const menus: MenuProps[] = [
-    { 
-      name: '01. DIGITAL SHIFT', 
-      desc: 'Urgensi & kewajiban jihad digital bagi calon alumni di platform media sosial.',
-      icon: <Globe className="w-6 h-6 md:w-7 md:h-7" />, 
-      path: '/digital-shift', 
-      color: 'hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] text-cyan-400 group-hover:text-cyan-300' 
-    },
-    { 
-      name: '02. DA\'I CREATOR TECH', 
-      desc: 'Optimalisasi senjata & tools Artificial Intelligence untuk production konten islami.',
-      icon: <Wand2 className="w-6 h-6" />, 
-      path: '/creator-tech', 
-      color: 'hover:border-emerald-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] text-emerald-400 group-hover:text-emerald-300' 
-    },
-    { 
-      name: '03. CONTENT STRATEGY', 
-      desc: 'Fiqih, adab, dan regulasi penting dalam menyebarkan syiar di ruang publik digital.',
-      icon: <ShieldCheck className="w-6 h-6" />, 
-      path: '/content-strategy', 
-      color: 'hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] text-purple-400 group-hover:text-purple-300' 
-    },
-    { 
-      name: '04. THE NEXT JOURNEY', 
-      desc: 'Amanat perjuangan & peta navigasi khidmah alumni KMI di tengah masyarakat.',
-      icon: <Rocket className="w-6 h-6" />, 
-      path: '/future-architect', 
-      color: 'hover:border-rose-500 hover:shadow-[0_0_30px_rgba(244,63,94,0.3)] text-rose-400 group-hover:text-rose-300' 
-    },
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const menus = [
+    { name: '01. CYBER DIGITAL NET', desc: 'Penjaringan dan syiar proaktif melalui ekosistem YouTube, TikTok, Instagram, dan Facebook.', icon: <Video className="w-6 h-6" />, path: '/digital-shift', color: 'from-cyan-100 via-cyan-50 to-white border-cyan-300 text-cyan-700' },
+    { name: '02. KONSULTASI INTERAKTIF', desc: 'Manajemen ruang tanya-jawab publik dan pelayanan respons cepat seputar dasar-dasar keislaman.', icon: <HelpCircle className="w-6 h-6" />, path: '/konsultasi-tanya-jawab', color: 'from-blue-100 via-blue-50 to-white border-blue-300 text-blue-700' },
+    { name: '03. APOLOGETIKA & DIALOG', desc: 'Metodologi menghadapi debat dari misionaris dan pendeta, hingga berbalik menjadi pintu hidayah.', icon: <ShieldAlert className="w-6 h-6" />, path: '/apologetika-dialog', color: 'from-purple-100 via-purple-50 to-white border-purple-300 text-purple-700' },
+    { name: '04. IKRAR & LEGALITAS', desc: 'Prosesi penuntunan dua kalimat syahadat yang sah secara syar\'i sekaligus pengurusan dokumen hukum.', icon: <UserCheck className="w-6 h-6" />, path: '/ikrar-legalitas', color: 'from-emerald-100 via-emerald-50 to-white border-emerald-300 text-emerald-700' },
+    { name: '05. PEMBINAAN ASAS MUALAF', desc: 'Bimbingan intensif pasca-masuk Islam: Pengajaran thaharah, shalat, serta pemurnian akidah.', icon: <BookOpen className="w-6 h-6" />, path: '/pembinaan-mualaf', color: 'from-teal-100 via-teal-50 to-white border-teal-300 text-teal-700' },
+    { name: '06. INTEGRASI & ISTIQAMAH', desc: 'Pendampingan sosio-kultur, penguatan mental dari tekanan luar, hingga kemandirian ekonomi mualaf.', icon: <Milestone className="w-6 h-6" />, path: '/istiqomah', color: 'from-rose-100 via-rose-50 to-white border-rose-300 text-rose-700' }
   ];
 
-  // KUNCI PERBAIKAN TYPESCRIPT: Memberikan anotasi tipe ekplisit 'Variants'
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12 },
-    },
-  };
-
-  // KUNCI PERBAIKAN TYPESCRIPT: Menambahkan 'as const' untuk mengunci type literal transition
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        type: 'spring' as const, 
-        stiffness: 100, 
-        damping: 16 
-      } 
-    },
-  };
-
   return (
-    <main className="relative flex min-h-screen max-h-screen h-screen w-full flex-col items-center justify-center p-6 md:p-12 overflow-hidden bg-[#050811] box-border">
-      
-      {/* BACKGROUND CONFIG */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=1920&q=80" 
-          alt="Futuristic Network Background" 
-          className="w-full h-full object-cover opacity-15 mix-blend-screen scale-105 animate-[pulse_10s_ease-in-out_infinite]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050811]/95 via-[#050811]/60 to-[#050811]/95"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,#050811_85%)]"></div>
+    <main className="relative min-h-screen w-full bg-[#040712] text-white p-6 md:p-12">
+      {/* IDENTITAS */}
+      <div className="flex justify-between items-center mb-8 border-b border-slate-800 pb-8 max-w-6xl mx-auto">
+        <div className="flex items-center gap-3 font-mono text-[10px] text-slate-500 uppercase tracking-widest">
+            <Compass className="w-4 h-4 text-cyan-500" /> Sekolah Tabligh Muhammadiyah // PWM Jateng
+        </div>
       </div>
 
-      {/* TOP DEKORASI */}
-      <div className="absolute top-6 left-6 hidden lg:flex items-center gap-3 font-mono text-[10px] text-slate-500 tracking-wider z-10">
-        <Terminal className="w-3 h-3 text-cyan-500 animate-pulse" />
-        <span>KMI_CORE_SYS // TA-2025/2026</span>
-      </div>
-      <div className="absolute top-6 right-6 hidden lg:flex items-center gap-2 font-mono text-[10px] text-slate-500 tracking-wider z-10">
-        <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
-        <span>ORBITASI_KHIDMAH: READY</span>
-      </div>
-
-      {/* WRAPPER KONTEN UTAMA */}
-      <div className="relative z-10 max-w-5xl w-full flex flex-col items-center justify-center py-4 gap-y-10">
-        
-        {/* HEADER SECTION */}
-        <motion.div 
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-center border-b border-slate-800/60 pb-6 w-full max-w-3xl relative"
-        >
-          <h2 className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-cyan-400 uppercase mb-4 font-mono">
-            PEMBEKALAN CALON ALUMNI • KMI NURUL HUDA PURBALINGGA
-          </h2>
-          
-          <h1 className="text-5xl md:text-7xl font-black tracking-widest uppercase text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.1)] leading-none mb-6">
-            DAKWAH <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">DIGITAL</span>
-          </h1>
-          
-          <p className="text-slate-400 text-xs md:text-sm tracking-[0.15em] uppercase font-mono max-w-2xl mx-auto leading-relaxed">
-            Orbitasi Pengabdian & Transformasi Santri di Era Artificial Intelligence
-          </p>
-        </motion.div>
-
-        {/* GRID MENU */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl"
-        >
-          {menus.map((menu, index) => (
-            <Link href={menu.path} key={index} className="block group">
-              <motion.div 
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.99 }}
-                className={`relative grid grid-cols-12 items-center py-6 pr-6 bg-slate-950/50 border border-slate-800/80 rounded-2xl cursor-pointer transition-all duration-300 backdrop-blur-md overflow-hidden min-h-[130px] ${menu.color}`}
-              >
-                {/* KOLOM 1: IKON DENGAN JARAK PADDING AMAN DARI TEPI KIRI */}
-                <div className="col-span-2 flex items-center justify-center pl-8 group-hover:scale-110 transition-transform duration-300 z-10 text-center">
-                  {menu.icon}
-                </div>
-
-                {/* KOLOM 2: AREA DESKRIPSI TEKS */}
-                <div className="col-span-10 flex flex-col justify-center text-left z-10 pl-4">
-                  <span className="text-lg md:text-xl font-bold tracking-wide text-slate-100 font-sans group-hover:text-white transition-colors">
-                    {menu.name}
-                  </span>
-                  <span className="text-xs md:text-sm text-slate-400 mt-2 leading-relaxed font-mono tracking-normal">
-                    {menu.desc}
-                  </span>
-                </div>
-              </motion.div>
-            </Link>
-          ))}
-        </motion.div>
-
+      {/* SLIDESHOW (Fixed: aspect-video memastikan proporsi 16:9 seperti thumbnail YT) */}
+      <div className="w-full max-w-6xl mx-auto mb-10">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
+          <AnimatePresence mode='wait'>
+            <motion.img
+              key={currentIndex}
+              src={slides[currentIndex]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              // Menggunakan object-cover dengan posisi center agar gambar mengisi penuh tanpa distorsi
+              className="w-full h-full object-cover object-center"
+              alt="Slideshow"
+            />
+          </AnimatePresence>
+          {/* Indikator slide */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+            {slides.map((_, i) => (
+              <div key={i} className={`h-1.5 w-8 rounded-full transition-all ${i === currentIndex ? 'bg-white' : 'bg-white/40'}`} />
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* BOTTOM FOOTER STATUS BAR */}
-      <div className="absolute bottom-6 w-full text-center z-10 font-mono text-[9px] text-slate-600 tracking-widest uppercase select-none pointer-events-none">
-        SYSTEM STATUS: <span className="text-emerald-500 font-bold">ONLINE</span> // TA 2025/2026 // © KMI NURUL HUDA PURBALINGGA
+      {/* HEADER UTAMA */}
+      <div className="text-center mb-12 max-w-6xl mx-auto">
+        <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-4 text-white">
+            FROM SHAHADA TO <span className="text-emerald-400">ISTIQAMAH</span>
+        </h1>
+        <p className="text-slate-400 font-mono text-sm uppercase tracking-widest">Metodologi Pendampingan Mualaf Berbasis Multimedia</p>
       </div>
 
+      {/* GRID KARTU */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {menus.map((menu, i) => (
+          <Link href={menu.path} key={i}>
+            <motion.div whileHover={{ y: -10 }} className={`p-8 bg-gradient-to-br ${menu.color} border rounded-2xl h-full shadow-lg`}>
+              <div className="mb-6">{menu.icon}</div>
+              <h3 className="text-xl font-black mb-3 text-slate-900">{menu.name}</h3>
+              <p className="text-slate-700 text-sm leading-relaxed">{menu.desc}</p>
+            </motion.div>
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }
