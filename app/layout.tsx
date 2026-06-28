@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Dakwah Digital - KMI Nurul Huda",
-  description: "Pembekalan Calon Alumni KMI Nurul Huda Purbalingga",
+  title: "Sekolah Tabligh - PWM JATENG",
+  description: "Metodologi Pendampingan Mualaf",
 };
 
 // PERBAIKAN: Menambahkan interface untuk tipe data props TypeScript
